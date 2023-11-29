@@ -5,7 +5,7 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "GOLI",
+  title: "Gooli",
   description: "Glossário online sobre informática acessível para deficientes auditivos"
 }
 
@@ -23,7 +23,7 @@ export default function RootLayout({
         <footer className="p-4 md:p-8 lg:p-10 bg-gray-800">
           <div className="mx-auto max-w-screen-xl text-center">
             <a href="#" className="flex justify-center items-center text-2xl font-semibold text-white">
-              InfoLibras    
+              Gooli
             </a>
             <p className="my-6 text-gray-500 text-gray-400">Glossário online sobre informática acessível para deficientes auditivos</p>
             <ul className="flex flex-wrap justify-center items-center mb-6 text-white">

@@ -3,18 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "NODE_OPTIONS='--require reflect-metadata' next dev",
+    "build": "NODE_OPTIONS='--require reflect-metadata' next build",
+    "start": "NODE_OPTIONS='--require reflect-metadata' next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "clsx": "^2.0.0",
     "kysely": "^0.26.3",
     "mysql2": "^3.6.5",
     "next": "14.0.3",
     "next-auth": "^4.24.5",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "reflect-metadata": "^0.1.13",
+    "tailwind-merge": "^2.0.0",
+    "typedi": "^0.10.0"
   },
   "devDependencies": {
     "@types/node": "^20",
