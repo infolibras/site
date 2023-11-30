@@ -3,6 +3,13 @@ import { Service } from "typedi"
 
 @Service()
 export default class TermosRepository {
+  async getTermos() {
+    return db.selectFrom("termo")
+      .select(["termo.id", "termo.termo", "termo.slug"])
+      .leftJoin("variacao", "variacao.idTermo", "termo.id")
+      .execute()
+  }
+
   async getTermoBySlug(slug: string) {
     return db.selectFrom("termo")
       .select(["termo.id", "termo.termo", "termo.slug"])

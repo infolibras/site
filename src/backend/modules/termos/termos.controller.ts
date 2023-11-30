@@ -10,12 +10,17 @@ export default class TermosController {
   ) {}
 
   @Route()
+  async list(_req: NextRequest, _params: any) {
+    return NextResponse.json(await this.termosService.list())
+  }
+
+  @Route()
   async get(_req: NextRequest, params: { params: { slug: string } }) {
     return NextResponse.json(await this.termosService.getOne(params.params.slug))
   }
 
   @Route()
-  async list(_req: NextRequest, params: { params: { letter: string } }) {
+  async listByLetter(_req: NextRequest, params: { params: { letter: string } }) {
     return NextResponse.json(await this.termosService.listByLetter(params.params.letter))
   }
 

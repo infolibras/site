@@ -8,6 +8,12 @@ export default class TermosService {
     private readonly termosRepository: TermosRepository
   ) {}
 
+  async list() {
+    const termos = await this.termosRepository.getTermos()
+
+    return termos
+  }
+
   async listByLetter(letter: string) {
     const termos = await this.termosRepository.getTermosByLetter(letter)
 

@@ -1,4 +1,5 @@
 import type { NextPage } from "next"
+import { YouTubeEmbed } from "@next/third-parties/google"
 
 interface Termo {
   slug: string
@@ -15,6 +16,17 @@ interface Termo {
       slug: string
     }
   }[]
+}
+
+export async function generateStaticParams() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/termos`)
+  const termos: Termo[] = await res.json()
+
+  return termos.map(termo => ({
+    params: {
+      slug: termo.slug
+    }
+  }))
 }
 
 const Page: NextPage<{ params: { slug: string } }> = async ({ params: { slug } }) => {
@@ -50,13 +62,11 @@ const Page: NextPage<{ params: { slug: string } }> = async ({ params: { slug } }
                   </span>
                 </div>
               )}
-              <p className="mb-5 font-light text-gray-500 dark:text-gray-400">{definicao.descricao}</p>
-              {definicao.videoUrl && (
-                <iframe width="100%" style={{ aspectRatio: "16 / 9" }} src={`https://www.youtube.com/embed/${getVideoId(definicao.videoUrl)}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-              )}
+              <blockquote cite={definicao.fonte} className="mb-5 font-light text-gray-500 dark:text-gray-400">{definicao.descricao}</blockquote>
+              {definicao.videoUrl && <YouTubeEmbed videoid={getVideoId(definicao.videoUrl)!} />}
               <div className="flex mt-5">
                 <span className="font-semibold">Fonte:&ensp;</span>
-                <a href={definicao.fonte} className="hover:underline text-blue-600">{definicao.fonte}</a>
+                <cite><a href={definicao.fonte} target="_blank" className="hover:underline text-blue-600">{definicao.fonte}</a></cite>
               </div>
               <div className="flex justify-end gap-3">
                 <a href="./editar_definicao.html" className="flex justify-end items-center mt-5 text-gray-500 hover:underline">

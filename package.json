@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/third-parties": "^14.0.3",
     "clsx": "^2.0.0",
     "kysely": "^0.26.3",
     "mysql2": "^3.6.5",
@@ -18,7 +19,8 @@
     "react-dom": "^18",
     "reflect-metadata": "^0.1.13",
     "tailwind-merge": "^2.0.0",
-    "typedi": "^0.10.0"
+    "typedi": "^0.10.0",
+    "typesense": "^1.7.2"
   },
   "devDependencies": {
     "@types/node": "^20",

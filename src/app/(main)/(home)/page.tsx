@@ -1,5 +1,5 @@
-import Categories from "./components/Categories"
-import Letters from "./components/Letters"
+import Categories from "../components/Categories"
+import Letters from "../components/Letters"
 
 export default function Page() {
   return (
@@ -8,22 +8,13 @@ export default function Page() {
       className="w-full p-5 lg:w-4/5 xl:w-8/12 2xl:w-7/12 lg:p-0 mx-auto flex flex-col md:flex-row gap-12 my-12"
     >
        <div className="w-full md:w-2/3">
-        <h1 className="font-bold text-2xl py-4">
+        <h1 className="font-bold text-2xl">
           Listar termos
           <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full">
             4
           </span>
         </h1>
         <Letters />
-        <h1 className="font-bold text-2xl">
-          Termos mais buscados
-        </h1>
-        <h2 className="font-semibold text-xl mb-2 mt-4">
-          A
-          <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full">
-            2
-          </span>
-        </h2>
         <article className="p-6 bg-white rounded-lg border border-gray-200 shadow-md mt-4">
           <div className="flex justify-between items-center mb-5 text-gray-500">
             <span className="bg-blue-700 text-gray-100 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded">
