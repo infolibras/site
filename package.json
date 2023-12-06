@@ -19,6 +19,7 @@
     "react-dom": "^18",
     "react-instantsearch": "^7.4.0",
     "reflect-metadata": "^0.1.13",
+    "sharp": "^0.33.0",
     "tailwind-merge": "^2.0.0",
     "typedi": "^0.10.0",
     "typesense": "^1.7.2",
