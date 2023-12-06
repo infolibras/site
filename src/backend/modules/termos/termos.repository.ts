@@ -35,8 +35,18 @@ export default class TermosRepository {
 
   async getTermosByLetter(letter: string) {
     return db.selectFrom("termo")
-      .select(["termo.id", "termo.termo", "termo.slug"])
+      .leftJoin("definicao", "definicao.idTermo", "termo.id")
+      .select(({ fn }) => [
+        "termo.id",
+        "termo.termo",
+        "termo.slug",
+        "definicao.definicao",
+        fn.count("definicao.id").as("definicoes"),
+        fn.count("definicao.urlVideo").as("videos")
+      ])
       .where("termo.termo", "like", `${letter}%`)
+      .groupBy(["termo.id", "definicao.id"])
+      .orderBy("termo.termo", "asc")
       .execute()
   }
 
@@ -44,5 +54,13 @@ export default class TermosRepository {
     return db.selectFrom("categoria")
       .select(["id", "nome", "slug"])
       .execute()
+  }
+
+  async termosCount() {
+    return db.selectFrom("termo")
+      .select(({ fn }) => [
+        fn.count("termo.id").as("total")
+      ])
+      .executeTakeFirst()
   }
 }

@@ -28,4 +28,9 @@ export default class TermosController {
   async categories(_req: NextRequest, _params: any) {
     return NextResponse.json(await this.termosService.getCategories())
   }
+
+  @Route()
+  async count(_req: NextRequest, _params: any) {
+    return NextResponse.json(await this.termosService.count())
+  }
 }

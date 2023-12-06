@@ -37,4 +37,10 @@ export default class TermosService {
 
     return categorias
   }
+
+  async count() {
+    const count = await this.termosRepository.termosCount()
+
+    return count
+  }
 }
