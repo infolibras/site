@@ -11,7 +11,7 @@ interface Termo {
     id: string
     definicao: string
     fonte: string
-    videoUrl?: string
+    urlVideo?: string
     categoria?: {
       id: string
       nome: string
@@ -20,7 +20,6 @@ interface Termo {
   }[]
 }
 
-/*
 export async function generateStaticParams() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/termos`)
   const termos: Termo[] = await res.json()
@@ -31,7 +30,8 @@ export async function generateStaticParams() {
     }
   }))
 }
-*/
+
+export const dynamic = "force-static"
 
 const Page: NextPage<{ params: { slug: string } }> = async ({ params: { slug } }) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/termos/obter/${slug}`)
@@ -73,7 +73,7 @@ const Page: NextPage<{ params: { slug: string } }> = async ({ params: { slug } }
               <blockquote cite={definicao.fonte} className="mb-5 font-light text-gray-500">
                 <p>{definicao.definicao}</p>
               </blockquote>
-              {definicao.videoUrl && <YouTubeEmbed videoid={getVideoId(definicao.videoUrl)!} />}
+              {definicao.urlVideo && <YouTubeEmbed videoid={getVideoId(definicao.urlVideo)!} />}
               <div className="flex mt-5">
                 <span className="font-semibold">Fonte:&ensp;</span>
                 <cite className="not-italic"><a href={definicao.fonte} target="_blank" className="hover:underline text-blue-600">{definicao.fonte}</a></cite>
