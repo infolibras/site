@@ -14,7 +14,7 @@ const nextConfig = {
     DB_PORT: process.env.DB_PORT,
     DB_NAME: process.env.DB_NAME,
     DB_USER: process.env.DB_USER,
-    DB_PASSWD: process.env.DB_PASSWD,
+    DB_PASSWORD: process.env.DB_PASSWORD,
     NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,

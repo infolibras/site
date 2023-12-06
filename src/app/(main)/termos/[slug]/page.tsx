@@ -20,6 +20,7 @@ interface Termo {
   }[]
 }
 
+/*
 export async function generateStaticParams() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/termos`)
   const termos: Termo[] = await res.json()
@@ -30,6 +31,7 @@ export async function generateStaticParams() {
     }
   }))
 }
+*/
 
 const Page: NextPage<{ params: { slug: string } }> = async ({ params: { slug } }) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/termos/obter/${slug}`)
