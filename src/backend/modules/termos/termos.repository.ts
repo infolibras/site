@@ -33,10 +33,18 @@ export default class TermosRepository {
       .execute()
   }
 
+  async getCategoriaById(id: number) {
+    return db.selectFrom("categoria")
+      .select(["id", "nome", "slug"])
+      .where("id", "=", id)
+      .executeTakeFirst()
+  }
+
   async getDefinicaoById(id: number) {
     return db.selectFrom("definicao")
       .leftJoin("categoria", "categoria.id", "definicao.idCategoria")
-      .select(["definicao.id", "definicao.definicao", "definicao.fonte", "definicao.urlVideo", "definicao.idUsuario", "categoria.id", "categoria.nome"])
+      .leftJoin("termo", "termo.id", "definicao.idTermo")
+      .select(["termo.termo", "idTermo", "definicao.id", "definicao.definicao", "definicao.fonte", "definicao.urlVideo", "definicao.idUsuario", "categoria.nome", "idCategoria"])
       .where("definicao.id", "=", id)
       .executeTakeFirst()
   }
@@ -76,6 +84,7 @@ export default class TermosRepository {
   async getCategorias() {
     return db.selectFrom("categoria")
       .select(["id", "nome", "slug"])
+      .orderBy("nome", "asc")
       .execute()
   }
 

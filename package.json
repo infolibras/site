@@ -19,6 +19,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-instantsearch": "^7.4.0",
+    "react-paginate": "^8.2.0",
     "reflect-metadata": "^0.1.13",
     "sharp": "^0.33.0",
     "tailwind-merge": "^2.0.0",

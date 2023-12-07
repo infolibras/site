@@ -2,6 +2,16 @@ import { Service } from "typedi"
 import TermosRepository from "./termos.repository"
 import HTTPError from "@/lib/error"
 import { revalidatePath } from "next/cache"
+import { Client } from "typesense"
+
+const typesenseClient = new Client({
+  nodes: [{
+    host: process.env.NEXT_PUBLIC_TYPESENSE_HOST!,
+    port: Number(process.env.NEXT_PUBLIC_TYPESENSE_PORT!),
+    protocol: process.env.NEXT_PUBLIC_TYPESENSE_PROTOCOL!
+  }],
+  apiKey: process.env.NEXT_PUBLIC_TYPESENSE_API_KEY!
+})
 
 @Service()
 export default class TermosService {
@@ -33,6 +43,12 @@ export default class TermosService {
     return { ...termo, definicoes, variacoes }
   }
 
+  async getCategoriaById(id: number) {
+    const categoria = await this.termosRepository.getCategoriaById(id)
+
+    return categoria
+  }
+
   async getTermoByDefinicaoId(id: number) {
     const termo = await this.termosRepository.getTermoByDefinicaoId(id)
 
@@ -51,12 +67,24 @@ export default class TermosService {
     return count
   }
 
-  async editarDefinicacao(id: number, data: { definicao?: string, fonte?: string, urlVideo?: string }) {
-    const definicao = await this.termosRepository.editarDefinicacao(id, data)
+  async editarDefinicacao(id: number, data: { definicao?: string, urlVideo?: string, idCategoria?: number }) {
+    const oldDefinicao = await this.termosRepository.getDefinicaoById(id)
+
+    if (!oldDefinicao) throw new HTTPError(404, "Definição não encontrada")
+
+    const oldDefinicaoDocument = await typesenseClient.collections("gooli-termos").documents(String(oldDefinicao.idTermo)).retrieve() as any
+    await this.termosRepository.editarDefinicacao(id, data)
+
+    await typesenseClient.collections("gooli-termos").documents(String(oldDefinicao.idTermo)).update({
+      categoria: data.idCategoria ? (await this.termosRepository.getCategoriaById(data.idCategoria))?.nome : undefined,
+      definicoes: oldDefinicaoDocument.definicoes.filter((definicao: any) => definicao !== oldDefinicao.definicao).concat(data.definicao ? [data.definicao] : []),
+      contem_video: data.urlVideo ? true : false
+    })
+
     const termo = await this.termosRepository.getTermoByDefinicaoId(id)
     revalidatePath(`/termos/${termo?.slug}`)
 
-    return definicao
+    return null
   }
 
   async getDefinicaoById(id: number) {

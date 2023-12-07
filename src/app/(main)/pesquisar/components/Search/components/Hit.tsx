@@ -1,4 +1,4 @@
-import Term from "../../components/Term"
+import Term from "../../../../components/Term"
 
 interface Hit {
   contem_video: boolean
