@@ -1,17 +1,12 @@
 import cn from "@/utils/cn"
 import { useSearchParams } from "next/navigation"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useRefinementList, UseRefinementListProps } from "react-instantsearch"
 
 const CategoriesRefinementList: React.FC<UseRefinementListProps & { categories: string[] }> = ({ categories, ...props }) => {
   const params = useSearchParams()
   const { items: unsortedItems, refine, canRefine } = useRefinementList(props)
-
-  useEffect(() => {
-    if (canRefine && params.get("categoria")) {
-      refine(params.get("categoria")!)
-    }
-  }, [canRefine])
+  const [alerted, setAlerted] = useState(false)
 
   const items = unsortedItems.sort((a, b) => {
     if (a.label < b.label) return -1
@@ -21,6 +16,16 @@ const CategoriesRefinementList: React.FC<UseRefinementListProps & { categories: 
   })
 
   const availableItems = items.map(item => item.label)
+
+  useEffect(() => {
+    if (canRefine && params.get("categoria")) {
+      if (availableItems.includes(params.get("categoria")!)) {
+        refine(params.get("categoria")!)
+      } else if (!alerted) {
+        alert("Ainda não existe nenhum termo com essa categoria.")
+      }
+    }
+  }, [canRefine, params])
 
   return (
     <div className="w-full md:w-1/3">

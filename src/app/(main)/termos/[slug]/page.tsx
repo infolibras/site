@@ -83,7 +83,7 @@ const Page: NextPage<{ params: { slug: string } }> = async ({ params: { slug } }
         </div>
         <Categories />
       </div>
-     </div>
+    </div>
   )
 }
 
