@@ -31,8 +31,6 @@ export async function generateStaticParams() {
   }))
 }
 
-export const dynamic = "force-static"
-
 const Page: NextPage<{ params: { slug: string } }> = async ({ params: { slug } }) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/termos/obter/${slug}`)
   const termo: Termo = await res.json()
