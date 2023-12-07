@@ -19,7 +19,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
     ]
   },
   additionalSearchParameters: {
-    query_by: "embedding,termo,variacoes,definicoes",
+    query_by: "termo,variacoes,definicoes",
     exclude_fields: "embedding",
     prefix: false
   }
