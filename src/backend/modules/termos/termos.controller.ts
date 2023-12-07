@@ -33,4 +33,21 @@ export default class TermosController {
   async count(_req: NextRequest, _params: any) {
     return NextResponse.json(await this.termosService.count())
   }
+
+  @Route()
+  async editarDefinicacao(req: NextRequest, params: { params: { id: string } }) {
+    const body = await req.formData()
+
+    const data: any = {}
+    for (const [key, value] of body.entries()) {
+      data[key] = value
+    }
+
+    return NextResponse.json(await this.termosService.editarDefinicacao(parseInt(params.params.id), data))
+  }
+
+  @Route()
+  async getDefinicaoById(_req: NextRequest, params: { params: { id: string } }) {
+    return NextResponse.json(await this.termosService.getDefinicaoById(parseInt(params.params.id)))
+  }
 }

@@ -33,15 +33,6 @@ const Page: NextPage<{ params: { slug: string } }> = async ({ params: { slug } }
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/termos/obter/${slug}`)
   const termo: Termo = await res.json()
 
-  function getVideoId(url: string) {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
-    const match = url.match(regExp)
-
-    return (match && match[2].length === 11)
-      ? match[2]
-      : null
-  }
-
   const isAdmin = false
 
   return (
@@ -76,12 +67,9 @@ const Page: NextPage<{ params: { slug: string } }> = async ({ params: { slug } }
               </div>
               {isAdmin && (
                 <div className="flex justify-end gap-3">
-                  <a href="./editar_definicao.html" className="flex justify-end items-center mt-5 text-gray-500 hover:underline">
+                  <Link href={`/admin/definicoes/${definicao.id}/editar`} className="flex justify-end items-center mt-5 text-gray-500 hover:underline">
                     <span className="text-sm">Editar</span>
-                  </a>
-                  <a href="#" className="flex justify-end items-center mt-5 text-gray-500 hover:underline">
-                    <span className="text-sm">Deletar</span>
-                  </a>
+                  </Link>
                 </div>
               )}
             </article>

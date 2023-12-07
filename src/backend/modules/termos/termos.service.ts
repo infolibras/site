@@ -1,6 +1,7 @@
 import { Service } from "typedi"
 import TermosRepository from "./termos.repository"
 import HTTPError from "@/lib/error"
+import { revalidatePath } from "next/cache"
 
 @Service()
 export default class TermosService {
@@ -42,5 +43,18 @@ export default class TermosService {
     const count = await this.termosRepository.termosCount()
 
     return count
+  }
+
+  async editarDefinicacao(id: number, data: { definicao?: string, fonte?: string, urlVideo?: string }) {
+    const definicao = await this.termosRepository.editarDefinicacao(id, data)
+    revalidatePath(`/definicoes/${id}`)
+
+    if (!definicao) throw new HTTPError(404, "Definição não encontrada")
+
+    return definicao
+  }
+
+  async getDefinicaoById(id: number) {
+    return this.termosRepository.getDefinicaoById(id)
   }
 }

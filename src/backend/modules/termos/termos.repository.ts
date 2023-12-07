@@ -18,12 +18,27 @@ export default class TermosRepository {
       .executeTakeFirst()
   }
 
+  async editarDefinicacao(id: number, data: { definicao?: string, fonte?: string, urlVideo?: string }) {
+    return db.updateTable("definicao")
+      .set(data)
+      .where("id", "=", id)
+      .executeTakeFirst()
+  }
+
   async getDefinicoesByTermoId(id: number) {
     return db.selectFrom("definicao")
       .select(["definicao.id", "definicao.definicao", "definicao.fonte", "definicao.urlVideo", "definicao.idUsuario"])
       .where("definicao.idTermo", "=", id)
       .leftJoin("categoria", "categoria.id", "definicao.idCategoria")
       .execute()
+  }
+
+  async getDefinicaoById(id: number) {
+    return db.selectFrom("definicao")
+      .leftJoin("categoria", "categoria.id", "definicao.idCategoria")
+      .select(["definicao.id", "definicao.definicao", "definicao.fonte", "definicao.urlVideo", "definicao.idUsuario", "categoria.id", "categoria.nome"])
+      .where("definicao.id", "=", id)
+      .executeTakeFirst()
   }
 
   async getVariacoesByTermoId(id: number) {
