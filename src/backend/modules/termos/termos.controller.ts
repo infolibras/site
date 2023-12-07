@@ -36,14 +36,17 @@ export default class TermosController {
 
   @Route()
   async editarDefinicacao(req: NextRequest, params: { params: { id: string } }) {
-    const body = await req.formData()
+    const body = await req.json()
 
-    const data: any = {}
-    for (const [key, value] of body.entries()) {
-      data[key] = value
+    if (!body.idCategoria) {
+      body.idCategoria = null
     }
 
-    return NextResponse.json(await this.termosService.editarDefinicacao(parseInt(params.params.id), data))
+    if (!body.urlVideo) {
+      body.urlVideo = null
+    }
+
+    return NextResponse.json(await this.termosService.editarDefinicacao(parseInt(params.params.id), body))
   }
 
   @Route()

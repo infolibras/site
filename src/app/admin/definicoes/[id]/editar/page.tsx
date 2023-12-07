@@ -16,6 +16,7 @@ interface Categoria {
 export const dynamic = "force-dynamic"
 
 const Page: NextPage<{ params: { id: string } }> = async ({ params: { id } }) => {
+  console.log(`${process.env.NEXT_PUBLIC_URL}/api/definicoes/${id}/obter`)
   const res1 = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/definicoes/${id}/obter`)
   const definicao: Definicao = await res1.json()
   const res2 = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/categorias`)
@@ -24,9 +25,18 @@ const Page: NextPage<{ params: { id: string } }> = async ({ params: { id } }) =>
   const update = async (formData: FormData) => {
     "use server"
 
+    const json = {
+      definicao: formData.get("definicao"),
+      idCategoria: formData.get("idCategoria"),
+      urlVideo: formData.get("urlVideo")
+    }
+
     await fetch(`${process.env.NEXT_PUBLIC_URL}/api/definicoes/${id}/editar`, {
       method: "PATCH",
-      body: formData
+      body: JSON.stringify(json),
+      headers: {
+        "Content-Type": "application/json"
+      }
     })
   }
 
@@ -42,21 +52,21 @@ const Page: NextPage<{ params: { id: string } }> = async ({ params: { id } }) =>
         <form action={update}>
           <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
             <div className="sm:col-span-2">
-              <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Definição</label>
-              <textarea id="description" rows={8} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" defaultValue={definicao.definicao}></textarea>
+              <label htmlFor="definicao" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Definição</label>
+              <textarea id="definicao" name="definicao" rows={8} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" defaultValue={definicao.definicao}></textarea>
             </div>
             <div className="sm:col-span-2">
-              <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoria</label>
-              <select id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={definicao.idCategoria ?? undefined}>
-                <option value={undefined}>(Nenhuma)</option>
+              <label htmlFor="idCategoria" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoria</label>
+              <select id="idCategoria" name="idCategoria" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={definicao.idCategoria ?? undefined}>
+                <option value="">(Nenhuma)</option>
                 {categorias.map(categoria => (
                   <option key={categoria.id} value={categoria.id}>{categoria.nome}</option>
                 ))}
               </select>
             </div>
             <div className="sm:col-span-2">
-              <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Link do vídeo</label>
-              <input type="text" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="https://[...]" value={definicao.urlVideo ?? undefined} />
+              <label htmlFor="urlVideo" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Link do vídeo</label>
+              <input type="text" name="urlVideo" id="urlVideo" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="https://[...]" value={definicao.urlVideo ?? undefined} />
             </div>
           </div>
           <div className="flex items-center space-x-4">

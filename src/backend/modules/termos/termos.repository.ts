@@ -18,8 +18,8 @@ export default class TermosRepository {
       .executeTakeFirst()
   }
 
-  async editarDefinicacao(id: number, data: { definicao?: string, fonte?: string, urlVideo?: string }) {
-    return db.updateTable("definicao")
+  async editarDefinicacao(id: number, data: { definicao?: string, fonte?: string, urlVideo?: string, idCategoria?: number }) {
+    await db.updateTable("definicao")
       .set(data)
       .where("id", "=", id)
       .executeTakeFirst()
