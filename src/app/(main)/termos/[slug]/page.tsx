@@ -25,9 +25,7 @@ export async function generateStaticParams() {
   const termos: Termo[] = await res.json()
 
   return termos.map(termo => ({
-    params: {
-      slug: termo.slug
-    }
+    slug: termo.slug
   }))
 }
 
