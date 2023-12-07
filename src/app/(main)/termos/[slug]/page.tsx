@@ -1,7 +1,7 @@
 import type { NextPage } from "next"
-import { YouTubeEmbed } from "@next/third-parties/google"
 import Categories from "../../components/Categories"
 import Link from "next/link"
+import Video from "./components/Video"
 
 interface Termo {
   slug: string
@@ -69,7 +69,7 @@ const Page: NextPage<{ params: { slug: string } }> = async ({ params: { slug } }
               <blockquote cite={definicao.fonte} className="mb-5 font-light text-gray-500">
                 <p>{definicao.definicao}</p>
               </blockquote>
-              {definicao.urlVideo && <YouTubeEmbed videoid={getVideoId(definicao.urlVideo)!} />}
+              {definicao.urlVideo && <Video url={definicao.urlVideo} />}
               <div className="flex mt-5">
                 <span className="font-semibold">Fonte:&ensp;</span>
                 <cite className="not-italic"><a href={definicao.fonte} target="_blank" className="hover:underline text-blue-600">{definicao.fonte}</a></cite>
