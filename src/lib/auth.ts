@@ -123,7 +123,7 @@ export const authOptions: AuthOptions = {
           provedor: provider,
           accessToken: access_token,
           estadoSessao: session_state,
-          expiracaoAccessToken: expires_at,
+          expiracaoAcessToken: expires_at,
           idToken: id_token,
           refreshToken: refresh_token,
           scope,

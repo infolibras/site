@@ -38,7 +38,7 @@ export interface ContaTable {
   idContaProvedor: string
   refreshToken: string | null
   accessToken: string | null
-  expiracaoAccessToken: number | null
+  expiracaoAcessToken: number | null
   tipoToken: string | null
   scope: string | null
   idToken: string | null
