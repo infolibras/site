@@ -48,6 +48,14 @@ export default class TermosRepository {
       .execute()
   }
 
+  async getTermoByDefinicaoId(id: number) {
+    return db.selectFrom("termo")
+      .select(["termo.id", "termo.termo", "termo.slug"])
+      .leftJoin("definicao", "definicao.idTermo", "termo.id")
+      .where("definicao.id", "=", id)
+      .executeTakeFirst()
+  }
+
   async getTermosByLetter(letter: string) {
     return db.selectFrom("termo")
       .leftJoin("definicao", "definicao.idTermo", "termo.id")

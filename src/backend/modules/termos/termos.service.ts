@@ -33,6 +33,12 @@ export default class TermosService {
     return { ...termo, definicoes, variacoes }
   }
 
+  async getTermoByDefinicaoId(id: number) {
+    const termo = await this.termosRepository.getTermoByDefinicaoId(id)
+
+    return termo
+  }
+
   async getCategories() {
     const categorias = await this.termosRepository.getCategorias()
 
@@ -47,9 +53,8 @@ export default class TermosService {
 
   async editarDefinicacao(id: number, data: { definicao?: string, fonte?: string, urlVideo?: string }) {
     const definicao = await this.termosRepository.editarDefinicacao(id, data)
-    revalidatePath(`/definicoes/${id}`)
-
-    if (!definicao) throw new HTTPError(404, "Definição não encontrada")
+    const termo = await this.termosRepository.getTermoByDefinicaoId(id)
+    revalidatePath(`/termos/${termo?.slug}`)
 
     return definicao
   }
