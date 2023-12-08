@@ -65,7 +65,7 @@ export default class TermosRepository {
   }
 
   async getTermosByLetter(letter: string) {
-    return db.selectFrom("termo")
+    const terms = await db.selectFrom("termo")
       .leftJoin("definicao", "definicao.idTermo", "termo.id")
       .select(({ fn }) => [
         "termo.id",
@@ -79,6 +79,15 @@ export default class TermosRepository {
       .groupBy(["termo.id", "definicao.id"])
       .orderBy("termo.termo", "asc")
       .execute()
+
+    const termsMap = new Map()
+    terms.forEach((term) => {
+      if (!termsMap.has(term.id)) {
+        termsMap.set(term.id, term)
+      }
+    })
+
+    return Array.from(termsMap.values())
   }
 
   async getCategorias() {
