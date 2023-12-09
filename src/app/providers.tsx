@@ -2,7 +2,6 @@
 
 import { Session } from "next-auth"
 import { SessionProvider } from "next-auth/react"
-import VLibras from "@djpfs/react-vlibras"
 import Script from "next/script"
 
 const Providers: React.FC<{ children: React.ReactNode, session: Session | null }> = ({ children, session }) => {
