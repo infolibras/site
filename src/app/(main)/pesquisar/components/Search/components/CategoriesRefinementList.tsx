@@ -1,61 +1,41 @@
-import cn from "@/utils/cn"
-import { useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
 import { useRefinementList, UseRefinementListProps } from "react-instantsearch"
 
-const CategoriesRefinementList: React.FC<UseRefinementListProps & { categories: string[] }> = ({ categories, ...props }) => {
-  const params = useSearchParams()
-  const { items: unsortedItems, refine, canRefine } = useRefinementList(props)
-  const [alerted, setAlerted] = useState(false)
+const CategoriesRefinementList: React.FC<UseRefinementListProps & { categories: string[], category?: string }> = ({ categories, category, ...props }) => {
+  const { items, refine } = useRefinementList(props)
 
-  const items = unsortedItems.sort((a, b) => {
-    if (a.label < b.label) return -1
-    if (a.label > b.label) return 1
-
-    return 0
+  const categiesItems = categories.map(categoria => items.find(item => item.label === categoria) ?? {
+    label: categoria,
+    value: categoria,
+    isRefined: false,
+    count: 0
   })
-
-  const availableItems = items.map(item => item.label)
-
-  useEffect(() => {
-    if (canRefine && params.get("categoria")) {
-      if (availableItems.includes(params.get("categoria")!)) {
-        refine(params.get("categoria")!)
-      } else if (!alerted) {
-        alert("Ainda não existe nenhum termo com essa categoria.")
-      }
-    }
-  }, [canRefine, params])
 
   return (
     <div className="w-full md:w-1/3">
       <div className="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8">
         <div className="flex items-center justify-between mb-4">
-          <h5 className="text-xl font-bold leading-none text-gray-900">
+          <h1 className="text-xl font-bold leading-none text-gray-900">
             Categorias
-          </h5>
+          </h1>
         </div>
         <div>
           <ul role="list" className="divide-y divide-gray-200">
-            {categories.map(categoria => (
-              <li className="py-3 sm:py-4">
-                <label className={cn("ml-4 text-sm font-medium text-gray-900 select-none cursor-pointer", !availableItems.includes(categoria) && "text-gray-400")} htmlFor={categoria}>
+            {categiesItems.map(categoria => (
+              <li className="py-3 sm:py-4 flex justify-between" key={categoria.label}>
+                <label className="ml-4 text-sm font-medium text-gray-900 select-none cursor-pointer" htmlFor={categoria.label}>
                   <input
                     type="checkbox"
-                    id={categoria}
-                    name={categoria}
-                    value={categoria}
-                    checked={items.find(item => item.label === categoria)?.isRefined}
+                    checked={categoria.isRefined}
                     onChange={() => {
-                      if (availableItems.includes(categoria)) {
-                        refine(categoria)
-                      }
+                      refine(categoria.value)
                     }}
                     className="mr-2"
-                    disabled={!availableItems.includes(categoria)}
                   />
-                  {categoria}
+                  {categoria.label}
                 </label>
+                <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full">
+                  {categoria.count}
+                </span>
               </li>
             ))}
           </ul>

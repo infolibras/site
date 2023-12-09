@@ -6,6 +6,7 @@ interface Hit {
   quantidade_definicoes: number
   slug: string
   definicoes: string[]
+  categoria?: string
 }
 
 const Hit: React.FC<{ hit: Hit }> = ({ hit }) => {
@@ -13,7 +14,7 @@ const Hit: React.FC<{ hit: Hit }> = ({ hit }) => {
     <Term
       term={hit.termo}
       video={hit.contem_video}
-      categories={[]}
+      categories={[hit.categoria!]}
       definicoes={hit.quantidade_definicoes}
       description={hit.definicoes[0]}
       slug={hit.slug}

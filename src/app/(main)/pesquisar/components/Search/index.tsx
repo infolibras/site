@@ -1,12 +1,14 @@
 "use client"
 
-import { Hits, InstantSearch } from "react-instantsearch"
+import { Hits } from "react-instantsearch"
+import { InstantSearchNext } from 'react-instantsearch-nextjs';
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter"
 import React from "react"
 import Hit from "./components/Hit"
 import SearchBox from "./components/SearchBox"
 import Pagination from "./components/Pagination"
 import CategoriesRefinementList from "./components/CategoriesRefinementList"
+import NoResultsBoundary from "./components/NoResultsBoundary";
 
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   server: {
@@ -29,9 +31,14 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
 
 const searchClient = typesenseInstantsearchAdapter.searchClient
 
-const Search: React.FC<{ categories: string[] }> = ({ categories }) => {
+const Search: React.FC<{ categories: string[], categoria?: string }> = ({ categories, categoria }) => {
   return (
-    <InstantSearch searchClient={searchClient} indexName="gooli-termos">
+    <InstantSearchNext
+      searchClient={searchClient}
+      indexName="gooli-termos"
+      future={{ preserveSharedStateOnUnmount: true }}
+      routing
+    >
       <div className="bg-blue-700 p-5 sticky top-0 w-full">
         <SearchBox />
       </div>
@@ -41,13 +48,15 @@ const Search: React.FC<{ categories: string[] }> = ({ categories }) => {
         <div className="flex flex-col md:flex-row gap-12">
           <div className="w-full md:w-2/3">
             <Pagination />
-            <Hits hitComponent={Hit as any} />
+            <NoResultsBoundary>
+              <Hits hitComponent={Hit as any} />
+            </NoResultsBoundary>
             <Pagination />
           </div>
-          <CategoriesRefinementList attribute="categoria" categories={categories} />
+          <CategoriesRefinementList escapeFacetValues attribute="categoria" categories={categories} category={categoria} />
         </div>
       </div>
-    </InstantSearch>
+    </InstantSearchNext>
   )
 }
 

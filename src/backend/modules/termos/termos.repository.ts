@@ -6,7 +6,9 @@ export default class TermosRepository {
   async getTermos() {
     return db.selectFrom("termo")
       .select(["termo.id", "termo.termo", "termo.slug"])
+      .leftJoin("definicao", "definicao.idTermo", "termo.id")
       .leftJoin("variacao", "variacao.idTermo", "termo.id")
+      .groupBy(["termo.id"])
       .execute()
   }
 
@@ -67,13 +69,16 @@ export default class TermosRepository {
   async getTermosByLetter(letter: string) {
     const terms = await db.selectFrom("termo")
       .leftJoin("definicao", "definicao.idTermo", "termo.id")
+      .leftJoin("categoria", "categoria.id", "definicao.idCategoria")
       .select(({ fn }) => [
         "termo.id",
         "termo.termo",
         "termo.slug",
         "definicao.definicao",
         fn.count("definicao.id").as("definicoes"),
-        fn.count("definicao.urlVideo").as("videos")
+        fn.count("definicao.urlVideo").as("videos"),
+        "definicao.idCategoria",
+        "categoria.nome as categoria"
       ])
       .where("termo.termo", "like", `${letter}%`)
       .groupBy(["termo.id", "definicao.id"])

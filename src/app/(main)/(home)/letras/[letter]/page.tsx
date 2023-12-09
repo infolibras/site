@@ -10,6 +10,7 @@ interface Termo {
   definicoes: number
   videos: number
   definicao: string
+  categoria: string
 }
 
 export async function generateStaticParams() {
@@ -40,7 +41,7 @@ const Page: NextPage<{ params: { letter: string } }> = async ({ params: { letter
             key={termo.id}
             term={termo.termo}
             video={termo.videos > 0}
-            categories={[]}
+            categories={[termo.categoria]}
             definicoes={termo.definicoes}
             description={termo.definicao}
             slug={termo.slug}

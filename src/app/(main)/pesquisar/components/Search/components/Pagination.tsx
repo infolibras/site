@@ -2,9 +2,9 @@ import { usePagination, UsePaginationProps } from "react-instantsearch"
 import ReactPaginate from "react-paginate"
 
 const Pagination: React.FC<UsePaginationProps> = (props) => {
-  const { currentRefinement, nbPages, refine, createURL } = usePagination(props)
+  const { currentRefinement, nbPages, refine } = usePagination(props)
 
-  return (
+  return (nbPages > 1) ? (
     <ReactPaginate
       pageCount={nbPages}
       pageRangeDisplayed={2}
@@ -15,10 +15,7 @@ const Pagination: React.FC<UsePaginationProps> = (props) => {
       breakClassName="break-me"
       containerClassName="pagination"
       activeClassName="active"
-      initialPage={currentRefinement}
-      onPageChange={(data) => {
-        refine(data.selected)
-      }}
+      onPageChange={data =>  refine(data.selected)}
       forcePage={currentRefinement}
       disableInitialCallback
       className="flex justify-center gap-2 mt-8"
@@ -28,7 +25,7 @@ const Pagination: React.FC<UsePaginationProps> = (props) => {
       disabledClassName="text-gray-300"
       activeLinkClassName="bg-blue-500 border-blue-500 text-white hover:border-blue-600 hover:text-white"
     />
-  )
+  ) : null
 }
 
 export default Pagination

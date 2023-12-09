@@ -20,18 +20,12 @@ const Categories = async () => {
               {categorias.length}
             </span>
           </h5>
-          <Link
-            href="/pesquisar"
-            className="text-sm font-medium text-blue-600 hover:underline"
-          >
-            Ver todas
-          </Link>
         </div>
         <div>
           <ul role="list" className="divide-y divide-gray-200">
             {categorias.map(categoria => (
               <li className="py-3 sm:py-4">
-                <Link href={{ pathname: "/pesquisar", query: { categoria: categoria.nome } }} className="flex items-center">
+                <Link href={{ pathname: "/pesquisar", query: { "gooli-termos[refinementList][categoria][0]": categoria.nome } }} className="flex items-center">
                   <span className="ml-4 text-sm font-medium text-gray-900">
                     {categoria.nome}
                   </span>
