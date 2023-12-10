@@ -49,4 +49,4 @@ const SearchBox: React.FC<UseSearchBoxProps> = (props) => {
   )
 }
 
-export default SearchBox;
+export default SearchBox

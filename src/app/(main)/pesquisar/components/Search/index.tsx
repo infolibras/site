@@ -3,7 +3,7 @@
 import { Hits } from "react-instantsearch"
 import { InstantSearchNext } from 'react-instantsearch-nextjs';
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter"
-import React from "react"
+import React, { useEffect } from "react"
 import Hit from "./components/Hit"
 import SearchBox from "./components/SearchBox"
 import Pagination from "./components/Pagination"

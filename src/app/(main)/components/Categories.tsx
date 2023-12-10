@@ -25,11 +25,11 @@ const Categories = async () => {
           <ul role="list" className="divide-y divide-gray-200">
             {categorias.map(categoria => (
               <li className="py-3 sm:py-4">
-                <Link href={{ pathname: "/pesquisar", query: { "gooli-termos[refinementList][categoria][0]": categoria.nome } }} className="flex items-center">
+                <a href={`/pesquisar?gooli-termos[refinementList][categoria][0]=${categoria.nome}`} className="flex items-center">
                   <span className="ml-4 text-sm font-medium text-gray-900">
                     {categoria.nome}
                   </span>
-                </Link>
+                </a>
               </li>
             ))}
           </ul>

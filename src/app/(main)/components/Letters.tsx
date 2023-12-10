@@ -21,7 +21,7 @@ const Letters: React.FC<{ currentLetter?: string }> = async ({ currentLetter }) 
                 href={`/letras/${letter}`}
                 className={
                   cn(
-                    "flex items-center justify-center w-8 h-8 leading-tight text-gray-500 hover:text-blue-700 rounded hover:bg-blue-100 uppercase",
+                    "flex items-center justify-center w-8 h-8 leading-tight text-gray-500 hover:text-blue-700 rounded hover:bg-blue-100 uppercase text-lg",
                     letter === currentLetter && "text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700"
                   )
                 }
