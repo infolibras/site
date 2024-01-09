@@ -20,7 +20,7 @@ export default class TermosRepository {
       .executeTakeFirst()
   }
 
-  async editarDefinicacao(id: number, data: { definicao?: string, fonte?: string, urlVideo?: string, idCategoria?: number }) {
+  async editarDefinicacao(id: number, data: { definicao?: string, fonte?: string, urlVideo?: string, idCategoria?: number | null }) {
     await db.updateTable("definicao")
       .set(data)
       .where("id", "=", id)
@@ -46,7 +46,7 @@ export default class TermosRepository {
     return db.selectFrom("definicao")
       .leftJoin("categoria", "categoria.id", "definicao.idCategoria")
       .leftJoin("termo", "termo.id", "definicao.idTermo")
-      .select(["termo.termo", "idTermo", "definicao.id", "definicao.definicao", "definicao.fonte", "definicao.urlVideo", "definicao.idUsuario", "categoria.nome", "idCategoria"])
+      .select(["termo.termo", "termo.slug", "idTermo", "categoria.nome", "definicao.id", "definicao.definicao", "definicao.fonte", "definicao.urlVideo", "definicao.idUsuario", "categoria.nome", "idCategoria"])
       .where("definicao.id", "=", id)
       .executeTakeFirst()
   }

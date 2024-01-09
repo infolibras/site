@@ -53,7 +53,7 @@ const Search: React.FC<{ categories: string[], categoria?: string }> = ({ catego
             </NoResultsBoundary>
             <Pagination />
           </div>
-          <CategoriesRefinementList escapeFacetValues attribute="categoria" categories={categories} category={categoria} />
+          <CategoriesRefinementList escapeFacetValues attribute="categorias" categories={categories} category={categoria} />
         </div>
       </div>
     </InstantSearchNext>

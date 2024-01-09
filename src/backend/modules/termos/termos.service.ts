@@ -67,16 +67,23 @@ export default class TermosService {
     return count
   }
 
-  async editarDefinicacao(id: number, data: { definicao?: string, urlVideo?: string, idCategoria?: number }) {
+  async editarDefinicacao(id: number, data: { definicao?: string, urlVideo?: string, idCategoria?: number | null }) {
     const oldDefinicao = await this.termosRepository.getDefinicaoById(id)
 
     if (!oldDefinicao) throw new HTTPError(404, "Definição não encontrada")
 
     const oldDefinicaoDocument = await typesenseClient.collections("gooli-termos").documents(String(oldDefinicao.idTermo)).retrieve() as any
+
+    if (!data.idCategoria) {
+      data.idCategoria = null
+    }
+
     await this.termosRepository.editarDefinicacao(id, data)
 
+    const oldDocument = await typesenseClient.collections("gooli-termos").documents(String(oldDefinicao.idTermo)).retrieve() as any
+
     await typesenseClient.collections("gooli-termos").documents(String(oldDefinicao.idTermo)).update({
-      categoria: data.idCategoria ? (await this.termosRepository.getCategoriaById(data.idCategoria))?.nome : undefined,
+      categorias: data.idCategoria ? oldDocument.categorias.filter((categoria: any) => categoria !== oldDefinicao.nome).concat([(await this.getCategoriaById(data.idCategoria))?.nome]) : oldDocument.categorias.filter((categoria: any) => categoria !== oldDefinicao.nome),
       definicoes: oldDefinicaoDocument.definicoes.filter((definicao: any) => definicao !== oldDefinicao.definicao).concat(data.definicao ? [data.definicao] : []),
       contem_video: data.urlVideo ? true : false
     })

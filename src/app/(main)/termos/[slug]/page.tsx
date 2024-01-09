@@ -77,10 +77,10 @@ const Page: NextPage<{ params: { slug: string } }> = async ({ params: { slug } }
                 <p>{definicao.definicao}</p>
               </blockquote>
               {definicao.urlVideo && <Video url={definicao.urlVideo} />}
-              <div className="flex mt-5">
+              <span className="mt-5 truncate overflow-hidden w-full inline-block">
                 <span className="font-semibold">Fonte:&ensp;</span>
                 <cite className="not-italic"><a href={definicao.fonte} target="_blank" className="hover:underline text-blue-600">{definicao.fonte}</a></cite>
-              </div>
+              </span>
               {isAdmin && (
                 <div className="flex justify-end gap-3">
                   <Link href={`/admin/definicoes/${definicao.id}/editar`} className="flex justify-end items-center mt-5 text-gray-500 hover:underline">

@@ -5,7 +5,7 @@ interface Props {
   slug: string
   description: string
   video: boolean
-  categories: string[]
+  categories?: string[]
   definicoes: number
 }
 
@@ -16,7 +16,7 @@ const Term: React.FC<Props> = ({ term, definicoes, slug, description, categories
         <h2 className="text-2xl font-bold tracking-tight text-gray-900">{term}</h2>
         <p className="font-light text-gray-500">{description}</p>
         {definicoes > 1 && (
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center mt-2">
             <div
               className="inline-flex items-center font-medium text-primary-600"
             >
@@ -36,7 +36,7 @@ const Term: React.FC<Props> = ({ term, definicoes, slug, description, categories
             </div>
           </div>
         )}
-        {(video || categories.length > 0 && categories[0]) && (
+        {(video || (categories?.length || 0) > 0 && categories?.[0]) && (
           <div className="flex items-center mt-3 text-gray-500 gap-2">
             {video && (
               <span className="bg-blue-700 text-gray-100 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded">
@@ -51,7 +51,7 @@ const Term: React.FC<Props> = ({ term, definicoes, slug, description, categories
                 Contem vídeo
               </span>
             )}
-            {categories.map(category => (
+            {categories?.map(category => (
               <span className="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded" key={category}>
                 {category}
               </span>

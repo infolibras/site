@@ -13,6 +13,6 @@ const dialect = new MysqlDialect({
   })
 })
 
-const db = new Kysely<Database>({ dialect })
+const db = new Kysely<Database>({ dialect, log: ["query", "error"] })
 
 export default db

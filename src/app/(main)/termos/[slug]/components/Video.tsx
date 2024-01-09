@@ -12,7 +12,7 @@ const Video: React.FC<{ url: string }> = ({ url }) => {
       : null
   }
 
-  return <YouTubeEmbed videoid={getVideoId(url)!} />
+  return <YouTubeEmbed params="rel=0&modestbranding=1&showinfo=0" videoid={getVideoId(url)!} />
 }
 
 export default Video
