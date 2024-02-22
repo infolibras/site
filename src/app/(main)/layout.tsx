@@ -12,12 +12,12 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             GOLI
           </Link>
           <p className="my-6 text-gray-500 text-gray-400">Glossário Online em Libras para Informática</p>
-          <ul className="flex flex-wrap justify-center items-center mb-6 text-white">
+          <ul className="flex flex-wrap justify-center items-center mb-6 text-white gap-4">
             <li>
-              <Link href="/sobre" className="mr-4 hover:underline md:mr-6">Sobre</Link>
+              <Link href="/sobre" className="hover:underline">Sobre</Link>
             </li>
             <li>
-              <Link href="/contato" className="mr-4 hover:underline md:mr-6">Contato</Link>
+              <Link href="/contato" className="hover:underline">Contato</Link>
             </li>
           </ul>
         </div>

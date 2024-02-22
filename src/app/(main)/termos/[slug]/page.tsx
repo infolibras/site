@@ -3,6 +3,8 @@ import Categories from "../../components/Categories"
 import Link from "next/link"
 import Video from "./components/Video"
 import ReturnButton from "@/app/components/ReturnButton"
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/auth"
 
 interface Termo {
   slug: string
@@ -33,8 +35,9 @@ export async function generateStaticParams() {
 const Page: NextPage<{ params: { slug: string } }> = async ({ params: { slug } }) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/termos/obter/${slug}`)
   const termo: Termo = await res.json()
+  const session = await getServerSession(authOptions)
 
-  const isAdmin = true
+  const isAdmin = session && session.user && ["Professor", "Administrador"].includes(session.user.cargo)
 
   return (
     <div

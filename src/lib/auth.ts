@@ -49,7 +49,7 @@ export const authOptions: AuthOptions = {
     },
     async getUser(id) {
       const user = await db.selectFrom("usuario")
-        .select(["id", "email", "nome", "dataVerificacaoEmail"])
+        .select(["id", "email", "nome", "dataVerificacaoEmail", "cargo"])
         .where("id", "=", parseInt(id))
         .executeTakeFirst()
 
@@ -59,12 +59,13 @@ export const authOptions: AuthOptions = {
         id: user.id.toString(),
         email: user.email,
         name: user.nome,
-        emailVerified: user.dataVerificacaoEmail
+        emailVerified: user.dataVerificacaoEmail,
+        cargo: user.cargo
       }
     },
     async getUserByEmail(email) {
       const user = await db.selectFrom("usuario")
-        .select(["id", "email", "nome", "dataVerificacaoEmail"])
+        .select(["id", "email", "nome", "dataVerificacaoEmail", "cargo"])
         .where("email", "=", email)
         .executeTakeFirst()
 
@@ -74,12 +75,13 @@ export const authOptions: AuthOptions = {
         id: user.id.toString(),
         email: user.email,
         name: user.nome,
-        emailVerified: user.dataVerificacaoEmail
+        emailVerified: user.dataVerificacaoEmail,
+        cargo: user.cargo
       }
     },
     async getUserByAccount({ provider, providerAccountId }) {
       const user = await db.selectFrom("usuario")
-        .select(["usuario.id", "email", "nome", "dataVerificacaoEmail"])
+        .select(["usuario.id", "email", "nome", "dataVerificacaoEmail", "cargo"])
         .leftJoin("conta", "conta.idUsuario", "usuario.id")
         .where(eb => eb.and([
           eb("conta.idContaProvedor", "=", providerAccountId),
@@ -93,7 +95,8 @@ export const authOptions: AuthOptions = {
         id: user.id.toString(),
         email: user.email,
         name: user.nome,
-        emailVerified: user.dataVerificacaoEmail
+        emailVerified: user.dataVerificacaoEmail,
+        cargo: user.cargo
       }
     },
     async updateUser({ id, email, name }) {

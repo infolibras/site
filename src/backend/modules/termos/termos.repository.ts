@@ -20,7 +20,7 @@ export default class TermosRepository {
       .executeTakeFirst()
   }
 
-  async editarDefinicacao(id: number, data: { definicao?: string, fonte?: string, urlVideo?: string, idCategoria?: number | null }) {
+  async editarDefinicacao(id: number, data: { definicao?: string, fonte?: string, urlVideo?: string | null, idCategoria?: number | null }) {
     await db.updateTable("definicao")
       .set(data)
       .where("id", "=", id)

@@ -87,7 +87,7 @@ export default class TermosService {
     const oldDocument = await typesenseClient.collections("gooli-termos").documents(String(oldDefinicao.idTermo)).retrieve() as any
 
     await typesenseClient.collections("gooli-termos").documents(String(oldDefinicao.idTermo)).update({
-      categorias: oldDocument.categorias ? (data.idCategoria ? oldDocument.categorias.filter((categoria: any) => categoria !== oldDefinicao.nome).concat([(await this.getCategoriaById(data.idCategoria))?.nome]) : oldDocument.categorias.filter((categoria: any) => categoria !== oldDefinicao.nome)) : undefined,
+      categorias: data.idCategoria ? (oldDocument.categorias ?? []).filter((categoria: any) => categoria !== oldDefinicao.nome).concat([(await this.getCategoriaById(data.idCategoria))?.nome]) : (oldDocument.categorias ?? []).filter((categoria: any) => categoria !== oldDefinicao.nome),
       definicoes: oldDefinicaoDocument.definicoes.filter((definicao: any) => definicao !== oldDefinicao.definicao).concat(data.definicao ? [data.definicao] : []),
       contem_video: data.urlVideo ? true : false
     })

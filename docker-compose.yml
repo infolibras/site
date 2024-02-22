@@ -7,16 +7,14 @@ services:
     environment:
       MYSQL_DATABASE: "db_goli"
       MYSQL_USER: "goli"
-      MYSQL_PASSWORD: "hgSIchuQJG"
-      MYSQL_ROOT_PASSWORD: "hgSIchuQJG"
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-"goli"}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-"hgSIchuQJG"}
     ports:
       - "3306:3306"
     expose:
       - "3306"
     volumes:
       - mysql-data:/var/lib/mysql
-    networks:
-      - mysql-phpmyadmin
 
   typesense:
     image: typesense/typesense:0.25.1
@@ -26,22 +24,6 @@ services:
     volumes:
       - typesense-data:/data
     command: "--data-dir /data --api-key=a3c3cb2572e5f7a2 --enable-cors"
-
-  phpmyadmin:
-    depends_on:
-      - mysql
-    image: phpmyadmin
-    restart: always
-    ports:
-      - "8090:80"
-    environment:
-      PMA_HOST: mysql
-      MYSQL_ROOT_PASSWORD: hgSIchuQJG
-    networks:
-      - mysql-phpmyadmin
-
-networks:
-  mysql-phpmyadmin:
 
 volumes:
   mysql-data:
