@@ -1,14 +1,19 @@
-import Link from "next/link"
-
 interface Categoria {
   id: string
   nome: string
   slug: string
 }
 
-const Categories = async () => {
+async function getCategories() {
+  if (process.env.FIRST_BUILD === "true") return []
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/categorias`)
   const categorias: Categoria[] = await res.json()
+
+  return categorias
+}
+
+const Categories = async () => {
+  const categorias = await getCategories()
 
   return (
     <div className="w-full md:w-1/3">
@@ -24,7 +29,7 @@ const Categories = async () => {
         <div>
           <ul role="list" className="divide-y divide-gray-200">
             {categorias.map(categoria => (
-              <li className="py-3 sm:py-4">
+              <li className="py-3 sm:py-4" key={categoria.id}>
                 <a href={`/pesquisar?gooli-termos[refinementList][categoria][0]=${categoria.nome}`} className="flex items-center">
                   <span className="ml-4 text-sm font-medium text-gray-900">
                     {categoria.nome}
