@@ -8,3 +8,5 @@ services:
     depends_on:
       - mysql
       - typesense
+    networks:
+      - goli-network

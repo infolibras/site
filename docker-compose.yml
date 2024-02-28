@@ -15,6 +15,8 @@ services:
       - "3306"
     volumes:
       - mysql-data:/var/lib/mysql
+    networks:
+      - goli-network
 
   typesense:
     image: typesense/typesense:0.25.1
@@ -24,7 +26,13 @@ services:
     volumes:
       - typesense-data:/data
     command: "--data-dir /data --api-key=a3c3cb2572e5f7a2 --enable-cors"
+    networks:
+      - goli-network
 
 volumes:
   mysql-data:
   typesense-data:
+
+networks:
+  goli-network:
+    driver: bridge

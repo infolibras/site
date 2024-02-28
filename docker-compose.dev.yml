@@ -10,11 +10,4 @@ services:
       PMA_HOST: mysql
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-"hgSIchuQJG"}
     networks:
-      - mysql-phpmyadmin
-
-  mysql:
-    networks:
-      - mysql-phpmyadmin
-
-networks:
-  mysql-phpmyadmin:
+      - goli-network
