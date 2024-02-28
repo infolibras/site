@@ -24,6 +24,8 @@ interface Termo {
 }
 
 export async function generateStaticParams() {
+  if (process.env.FIRST_BUILD === "true") return []
+
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/termos`)
   const termos: Termo[] = await res.json()
 
