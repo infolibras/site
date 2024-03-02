@@ -4,6 +4,8 @@ import Container from "typedi"
 
 const termosController = Container.get(TermosController)
 
+export const dynamic = "force-dynamic"
+
 export async function GET(req: NextRequest, params: any) {
   return termosController.count(req, params)
 }

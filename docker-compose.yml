@@ -5,14 +5,12 @@ services:
     image: mysql:8.2.0
     restart: always
     environment:
-      MYSQL_DATABASE: "db_goli"
-      MYSQL_USER: "goli"
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-"goli"}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-"hgSIchuQJG"}
+      MYSQL_DATABASE: ${DB_NAME:-"goli"}
+      MYSQL_USER: ${DB_USER:-"goli"}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-"goli"}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-"hgSIchuQJG"}
     ports:
       - "3306:3306"
-    expose:
-      - "3306"
     volumes:
       - mysql-data:/var/lib/mysql
     networks:

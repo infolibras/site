@@ -3,6 +3,22 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - SUAP_CLIENT_ID=${SUAP_CLIENT_ID}
+        - SUAP_CLIENT_SECRET=${SUAP_CLIENT_SECRET}
+        - DB_HOST=${DB_HOST}
+        - DB_PORT=${DB_PORT}
+        - DB_NAME=${DB_NAME}
+        - DB_USER=${DB_USER}
+        - DB_PASSWORD=${DB_PASSWORD}
+        - NEXT_PUBLIC_URL=${NEXT_PUBLIC_URL}
+        - NEXTAUTH_URL=${NEXTAUTH_URL}
+        - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+        - NEXT_PUBLIC_TYPESENSE_HOST=${NEXT_PUBLIC_TYPESENSE_HOST}
+        - NEXT_PUBLIC_TYPESENSE_PROTOCOL=${NEXT_PUBLIC_TYPESENSE_PROTOCOL}
+        - NEXT_PUBLIC_TYPESENSE_PORT=${NEXT_PUBLIC_TYPESENSE_PORT}
+        - NEXT_PUBLIC_TYPESENSE_API_KEY=${NEXT_PUBLIC_TYPESENSE_API_KEY}
+        - FIRST_BUILD=${FIRST_BUILD}
     ports:
       - "3000:3000"
     depends_on:
