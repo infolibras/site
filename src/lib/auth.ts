@@ -1,7 +1,7 @@
-import type { AuthOptions } from "next-auth"
+import type { NextAuthOptions } from "next-auth"
 import db from "@/database"
 
-export const authOptions: AuthOptions = {
+export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === "development",
   providers: [
