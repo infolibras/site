@@ -34,7 +34,9 @@ export const authOptions: AuthOptions = {
   },
   callbacks: {
     async session({ session, user }) {
-      session.user.cargo = (user as any).cargo ?? "Aluno"
+      if (session && session.user && user) {
+        session.user.cargo = (user as any).cargo ?? "Aluno"
+      }
 
       return session
     }
