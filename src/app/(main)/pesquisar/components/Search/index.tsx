@@ -3,7 +3,7 @@
 import { Hits } from "react-instantsearch"
 import { InstantSearchNext } from 'react-instantsearch-nextjs';
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter"
-import React, { useEffect } from "react"
+import React from "react"
 import Hit from "./components/Hit"
 import SearchBox from "./components/SearchBox"
 import Pagination from "./components/Pagination"
@@ -22,10 +22,10 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
     ]
   },
   additionalSearchParameters: {
-    query_by: "termo,variacoes,definicoes,embedding",
+    query_by: "termo,variacoes,embedding,definicoes",
     query_by_weights: "3,2,2,1",
     exclude_fields: "embedding",
-    prefix: "true,true,true,false"
+    prefix: "true,true,false,true"
   }
 })
 
