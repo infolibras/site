@@ -2,17 +2,16 @@ version: "3.8"
 
 services:
   mysql:
-    image: mysql:8.2.0
-    restart: always
+    image: bitnami/mysql
     environment:
       MYSQL_DATABASE: ${DB_NAME:-"goli"}
       MYSQL_USER: ${DB_USER:-"goli"}
-      MYSQL_PASSWORD: ${DB_PASSWORD:-"goli"}
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-"hgSIchuQJG"}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-"asdf1234"}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-"asdf1234"}
     ports:
       - "3306:3306"
     volumes:
-      - mysql-data:/var/lib/mysql
+      - mysql-data:/bitnami/mysql/data
     networks:
       - goli-network
 
@@ -23,7 +22,7 @@ services:
       - "8108:8108"
     volumes:
       - typesense-data:/data
-    command: "--data-dir /data --api-key=a3c3cb2572e5f7a2 --enable-cors"
+    command: "--data-dir /data --api-key=${NEXT_PUBLIC_TYPESENSE_API_KEY} --enable-cors"
     networks:
       - goli-network
 
