@@ -2,7 +2,6 @@ services:
   web:
     build:
       context: .
-      dockerfile: Dockerfile
     environment:
       - SUAP_CLIENT_ID=${SUAP_CLIENT_ID}
       - SUAP_CLIENT_SECRET=${SUAP_CLIENT_SECRET}
