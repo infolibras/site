@@ -38,10 +38,10 @@ ENV NEXT_PUBLIC_TYPESENSE_API_KEY=$NEXT_PUBLIC_TYPESENSE_API_KEY
 ENV FIRST_BUILD=$FIRST_BUILD
 
 FROM base AS prod-deps
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
+RUN pnpm install --prod --frozen-lockfile
 
 FROM base AS build
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile
 RUN pnpm run build
 
 FROM base
