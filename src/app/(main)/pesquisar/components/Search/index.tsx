@@ -23,7 +23,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   },
   additionalSearchParameters: {
     query_by: "termo,variacoes,embedding,definicoes",
-    query_by_weights: "3,2,2,1",
+    query_by_weights: "3,2,4,1",
     exclude_fields: "embedding",
     prefix: "true,true,false,true"
   }
