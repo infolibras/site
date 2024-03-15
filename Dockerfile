@@ -1,9 +1,4 @@
-FROM mitchpash/pnpm AS deps
-RUN apk add --no-cache libc6-compat
-WORKDIR /home/node/app
-COPY pnpm-lock.yaml .npmr[c] ./
-
-RUN pnpm fetch
+FROM node:20-alpine
 
 ARG SUAP_CLIENT_ID
 ARG SUAP_CLIENT_SECRET
@@ -37,29 +32,18 @@ ENV NEXT_PUBLIC_TYPESENSE_PORT=$NEXT_PUBLIC_TYPESENSE_PORT
 ENV NEXT_PUBLIC_TYPESENSE_API_KEY=$NEXT_PUBLIC_TYPESENSE_API_KEY
 ENV FIRST_BUILD=$FIRST_BUILD
 
-FROM mitchpash/pnpm AS builder
-WORKDIR /home/node/app
-COPY --from=deps /home/node/app/node_modules ./node_modules
+WORKDIR /app
+
+COPY package.json .
+COPY pnpm-lock.yaml .
+
+RUN npm install -g pnpm && pnpm install
+
 COPY . .
 
-RUN pnpm install -r --offline
-
-RUN pnpm build
-
-FROM mitchpash/pnpm AS runner
-WORKDIR /home/node/app
-
-ENV NODE_ENV production
-
-COPY --from=builder /home/node/app/next.config.js ./
-COPY --from=builder /home/node/app/public ./public
-COPY --from=builder /home/node/app/package.json ./package.json
-
-COPY --from=builder --chown=node:node /home/node/app/.next/standalone ./
-COPY --from=builder --chown=node:node /home/node/app/.next/static ./.next/static
+RUN pnpm run build
 
 EXPOSE 3000
 
-ENV PORT 3000
-
-CMD ["node", "server.js"]
+CMD ["pnpm", "start"]
+z

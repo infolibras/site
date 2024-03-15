@@ -7,7 +7,6 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true
   },
-  output: 'standalone',
   env: {
     SUAP_CLIENT_ID: process.env.SUAP_CLIENT_ID,
     SUAP_CLIENT_SECRET: process.env.SUAP_CLIENT_SECRET,
